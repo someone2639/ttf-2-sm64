@@ -41,7 +41,7 @@ for x in ttf["cmap"].tables:
 ttf.close()
 
 nums = ['zero','one','two','three','four','five','six','seven','eight','nine']
-testString = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnoprstuvwxyz'
+testString = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 checkArray = [i for i in testString]
 
 # edit this array for a different order of this stuff
@@ -51,26 +51,38 @@ checkArray2=['exclam','period','comma','ampersand','hyphen','questiondown','quot
 testArray= nums+checkArray+checkArray2
 files = os.listdir(TEXTS_DIR)
 ctr = 0
-for filename in files:
+files2 = files
+for filename in files2:
     name, ext = os.path.splitext(filename)
     input_txt = TEXTS_DIR + "/" + filename
 
     if name in testArray:
         ch = filename.split('.')[0]
         output_png = IMAGES_DIR + "/" + str(testArray.index(ch)) + ".png"
-        os.system(' '.join(["convert", "-font", TTF_PATH, "-pointsize", FONT_SIZE, "-background", "rgba\(0,0,0,0\)","+antialias", "label:$(cat " + input_txt+")", output_png]))
+        os.system(' '.join(["convert", "-interline-spacing 0", "-size 32x32", "-font", TTF_PATH, "-pointsize", FONT_SIZE, "-background", "rgba\(0,0,0,0\)","+antialias", "label:$(cat " + input_txt+")", output_png]))
         ctr+=1
-ctr = 0
-for filename in files:
-    name, ext = os.path.splitext(filename)
-    output_png = IMAGES_DIR + "/" + TTF_NAME + "_" + name + "_" + FONT_SIZE + ".png"
-    save_png = IMAGES_DIR + "/rotated/" + name  + ".png"
-    if name in testArray:
-        f = Image.open(output_png)
-        w,h=f.size
-        pA = f.load()
-        print(save_png)
-        f.save(save_png)
-        f.close()
+    # else:
+    #     files.remove(filename)
+
+# ctr = 0
+# for filename in files:
+#     name, ext = os.path.splitext(filename)
+#     ch = filename.split('.')[0]
+#     output_png = IMAGES_DIR + "/" + str(testArray.index(ch)) + ".png"
+#     save_png = IMAGES_DIR + "/resized/" + str(testArray.index(ch)) + ".png"
+#     if name in testArray:
+#         f = Image.open(output_png)
+#         f_r2 = f.resize((32,32))
+#         w,h=f.size
+#         pA = f.load()
+#         print(save_png)
+#         for i in range(0,w):
+#             for j in range(0,h):
+#                 print(pA[i,j])
+#                 if pA[i,j]!=(0,0):
+#                     pA[i,j]=(252,255)
+#                     # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
+#         f.save(save_png)
+#         f.close()
 
 print("finished")
