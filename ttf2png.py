@@ -31,32 +31,36 @@ for d in [TEXTS_DIR, IMAGES_DIR]:
 
 for x in ttf["cmap"].tables:
     for y in x.cmap.items():
-        char_unicode = unichr(y[0])
-        char_utf8 = char_unicode.encode('utf_8')
+        char_unicode = chr(y[0])
         char_name = y[1]
         if not char_name[0:3] == 'uni':
             if not char_name[0:4]=='afii':
                 f = open(os.path.join(TEXTS_DIR, char_name + '.txt'), 'w')
-                f.write(char_utf8)
+                f.write(char_unicode)
                 f.close()
 ttf.close()
-testString = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
+
+nums = ['zero','one','two','three','four','five','six','seven','eight','nine']
+testString = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnoprstuvwxyz'
 checkArray = [i for i in testString]
-checkArray2=['zero','one','two','three','four','five','six','seven','eight','nine','exclam','period','comma','ampersand','hyphen','questiondown','quotedblleft','quotedblright','percent','tilde',
+
+# edit this array for a different order of this stuff
+checkArray2=['exclam','period','comma','ampersand','hyphen','questiondown','quotedblleft','quotedblright','percent','tilde',
     'parenleft','parenright','colon','acute']
-testArray= checkArray+checkArray2
+
+testArray= nums+checkArray+checkArray2
 files = os.listdir(TEXTS_DIR)
+ctr = 0
 for filename in files:
     name, ext = os.path.splitext(filename)
     input_txt = TEXTS_DIR + "/" + filename
-    output_png = IMAGES_DIR + "/" + TTF_NAME + "_" + name + "_" + FONT_SIZE + ".png"
-    # f = open(output_png,"w+")
-    # f.close()
+
     if name in testArray:
-        subprocess.call(["convert", "-font", TTF_PATH, "-pointsize", FONT_SIZE, "-background", "rgba(0,0,0,0)","+antialias", "label:@" + input_txt, output_png])
-
-
-
+        ch = filename.split('.')[0]
+        output_png = IMAGES_DIR + "/" + str(testArray.index(ch)) + ".png"
+        os.system(' '.join(["convert", "-font", TTF_PATH, "-pointsize", FONT_SIZE, "-background", "rgba\(0,0,0,0\)","+antialias", "label:$(cat " + input_txt+")", output_png]))
+        ctr+=1
+ctr = 0
 for filename in files:
     name, ext = os.path.splitext(filename)
     output_png = IMAGES_DIR + "/" + TTF_NAME + "_" + name + "_" + FONT_SIZE + ".png"
@@ -68,23 +72,5 @@ for filename in files:
         print(save_png)
         f.save(save_png)
         f.close()
-
-# for filename in files:
-#     name, ext = os.path.splitext(filename)
-#     save_png = IMAGES_DIR + "/rotated/" + name  + ".png"
-#     if name in testArray:
-#         f = Image.open(save_png)
-#         w,h=f.size
-#         pA = f.load()
-#         print(save_png)
-#         for i in range(0,w):
-#             for j in range(0,h):
-#                 print(pA[i,j])
-#                 if pA[i,j]!=(0,0):
-#                     pA[i,j]=(252,255)
-#                     # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
-#         f.save(save_png)
-#         f.close()
-
 
 print("finished")
