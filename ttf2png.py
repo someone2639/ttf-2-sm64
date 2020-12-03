@@ -63,20 +63,9 @@ for filename in files:
     save_png = IMAGES_DIR + "/rotated/" + name  + ".png"
     if name in testArray:
         f = Image.open(output_png)
-        f_m = f.transpose(Image.FLIP_LEFT_RIGHT)
-        f_r = f_m.rotate(90,expand=1)
-        f_r2 = f_r.resize((16,8))
-        f_m2 = f_r2.transpose(Image.FLIP_LEFT_RIGHT)
-        f = f_m2.transpose(Image.FLIP_TOP_BOTTOM)
         w,h=f.size
         pA = f.load()
         print(save_png)
-        for i in range(0,w):
-            for j in range(0,h):
-                print(pA[i,j])
-                if pA[i,j]!=(0,0):
-                    pA[i,j]=(252,255)
-                    # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
         f.save(save_png)
         f.close()
 
