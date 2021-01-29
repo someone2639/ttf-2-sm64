@@ -62,14 +62,14 @@ files2 = files
 #         ch = filename.split('.')[0]
 #         ctr+=1
 
-my_width = 16
-my_height = 16
+my_width = 64
+my_height = 64
 
 for i in range(len(check_char)):
     output_png = IMAGES_DIR + "/" + str(i) + ".png"
     from pathlib import Path
     Path(output_png).touch()
-    print(i)
+    # print(i)
     if i == 32:
         os.system(' '.join(["convert", "-interline-spacing 0", "-size %dx%d" % (my_width, my_height), "-font", TTF_PATH, "-pointsize", FONT_SIZE, "-background", "rgba\(255,255,255,0\)","+antialias", "label:'\ '", output_png]))
     elif i == 34:
@@ -84,24 +84,32 @@ for i in range(len(check_char)):
     #     files.remove(filename)
 
 # ctr = 0
-# for filename in files:
-#     name, ext = os.path.splitext(filename)
-#     ch = filename.split('.')[0]
-#     output_png = IMAGES_DIR + "/" + str(testArray.index(ch)) + ".png"
-#     save_png = IMAGES_DIR + "/resized/" + str(testArray.index(ch)) + ".png"
-#     if name in testArray:
-#         f = Image.open(output_png)
-#         f_r2 = f.resize((32,32))
-#         w,h=f.size
-#         pA = f.load()
-#         print(save_png)
-#         for i in range(0,w):
-#             for j in range(0,h):
-#                 print(pA[i,j])
-#                 if pA[i,j]!=(0,0):
-#                     pA[i,j]=(252,255)
-#                     # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
-#         f.save(save_png)
-#         f.close()
+print([i for i in os.listdir(IMAGES_DIR) if os.path.isfile(IMAGES_DIR+"/"+i)])
+print([i for i in os.listdir(IMAGES_DIR)])
+for filename in [i for i in os.listdir(IMAGES_DIR) if os.path.isfile(IMAGES_DIR+"/"+i)]:
+    name, ext = os.path.splitext(filename)
+    ch = int(filename.split('.')[0])
+    output_png = IMAGES_DIR + "/" + str(ch) + ".png"
+    save_png = IMAGES_DIR + "/resized/" + str(ch) + ".png"
+    print(output_png, save_png)
+    # if name in check_char:
+    f = Image.open(output_png)
+    f_m = f.transpose(Image.FLIP_LEFT_RIGHT)
+    f_r = f_m.rotate(90,expand=1)
+    f_r2 = f_r.resize((16,8))
+    f_m2 = f_r2.transpose(Image.FLIP_LEFT_RIGHT)
+    f = f_m2.transpose(Image.FLIP_TOP_BOTTOM)
+    # f_r2 = f.resize((32,32))
+    w,h=f.size
+    pA = f.load()
+    # print(save_png)
+    for i in range(0,w):
+        for j in range(0,h):
+            # print(pA[i,j])
+            if pA[i,j]!=(0,0):
+                pA[i,j]=(252,255)
+                # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
+    f.save(save_png)
+    f.close()
 
 print("finished")
