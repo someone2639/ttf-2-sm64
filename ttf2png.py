@@ -90,26 +90,27 @@ for filename in [i for i in os.listdir(IMAGES_DIR) if os.path.isfile(IMAGES_DIR+
     name, ext = os.path.splitext(filename)
     ch = int(filename.split('.')[0])
     output_png = IMAGES_DIR + "/" + str(ch) + ".png"
-    save_png = IMAGES_DIR + "/resized/" + str(ch) + ".png"
-    print(output_png, save_png)
+    # save_png = IMAGES_DIR + "/resized/" + str(ch) + ".png"
+    # print(output_png, save_png)
     # if name in check_char:
     f = Image.open(output_png)
     f_m = f.transpose(Image.FLIP_LEFT_RIGHT)
     f_r = f_m.rotate(90,expand=1)
-    f_r2 = f_r.resize((16,8))
+    # f_r2 = f_r.resize((16,8))
+    f_r2 = f_r
     f_m2 = f_r2.transpose(Image.FLIP_LEFT_RIGHT)
     f = f_m2.transpose(Image.FLIP_TOP_BOTTOM)
     # f_r2 = f.resize((32,32))
     w,h=f.size
     pA = f.load()
     # print(save_png)
-    for i in range(0,w):
-        for j in range(0,h):
-            # print(pA[i,j])
-            if pA[i,j]!=(0,0):
-                pA[i,j]=(252,255)
+    # for i in range(0,w):
+    #     for j in range(0,h):
+    #         # print(pA[i,j])
+    #         if pA[i,j]!=(0,0):
+    #             pA[i,j]=(252,255)
                 # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
-    f.save(save_png)
+    f.save(output_png)
     f.close()
 
 print("finished")
