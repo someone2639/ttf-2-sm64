@@ -2,7 +2,7 @@
 import sys
 import os
 import subprocess
-import numpy as np
+# import numpy as np
 
 from PIL import Image
 from fontTools.ttLib import TTFont
