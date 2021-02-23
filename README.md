@@ -3,6 +3,7 @@ Converts a Font file's glyphs to an image format that can be imported into Super
 
 ## Prerequisites:
 `pip3 install pillow fontTools`
+`sudo apt install imagemagick`
 
 ## Usage:
 `python3 ttf2png.py (path to ttf file).ttf (font size)`
