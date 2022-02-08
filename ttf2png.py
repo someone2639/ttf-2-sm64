@@ -6,6 +6,7 @@ import numpy as np
 
 from PIL import Image
 from fontTools.ttLib import TTFont
+from LUT import decompFontLUT
 
 # xd = str(input("Delete texts and images directory? This will clean up the results for you (Y/n): "))
 # if xd == 'y' or xd=='Y' or xd=='':
@@ -31,13 +32,15 @@ for d in [TEXTS_DIR, IMAGES_DIR]:
 
 for x in ttf["cmap"].tables:
     for y in x.cmap.items():
-        char_unicode = unichr(y[0])
-        char_utf8 = char_unicode.encode('utf_8')
+        # print(y)
+        char_unicode = chr(y[0])
+
+        char_utf8 = char_unicode
         char_name = y[1]
         if not char_name[0:3] == 'uni':
             if not char_name[0:4]=='afii':
                 f = open(os.path.join(TEXTS_DIR, char_name + '.txt'), 'w')
-                f.write(char_utf8)
+                f.write(str(char_utf8))
                 f.close()
 ttf.close()
 testString = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'
@@ -60,7 +63,11 @@ for filename in files:
 for filename in files:
     name, ext = os.path.splitext(filename)
     output_png = IMAGES_DIR + "/" + TTF_NAME + "_" + name + "_" + FONT_SIZE + ".png"
-    save_png = IMAGES_DIR + "/rotated/" + name  + ".png"
+    save_png = ""
+    if name in decompFontLUT:
+        save_png = IMAGES_DIR + "/rotated/" + decompFontLUT[name] + ".png"
+    else:
+        save_png = IMAGES_DIR + "/rotated/" + name  + ".png"
     if name in testArray:
         f = Image.open(output_png)
         f_m = f.transpose(Image.FLIP_LEFT_RIGHT)
@@ -70,10 +77,10 @@ for filename in files:
         f = f_m2.transpose(Image.FLIP_TOP_BOTTOM)
         w,h=f.size
         pA = f.load()
-        print(save_png)
+        # print(save_png)
         for i in range(0,w):
             for j in range(0,h):
-                print(pA[i,j])
+                # print(pA[i,j])
                 if pA[i,j]!=(0,0):
                     pA[i,j]=(252,255)
                     # pA[i,j]=(255-pA[i,j][0],pA[i,j][1])
