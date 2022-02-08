@@ -61,15 +61,23 @@ for filename in files:
 
 def crop(png_image_name):
     im = Image.open(png_image_name)
+    sz = im.size
     bounds = list(im.getbbox())
     print(bounds)
     bw = bounds[2] - bounds[0]
-    if bw < 8:
-        bounds[2] = bounds[0] + 8
+
+    LEFT_WD_MIN = 8
+    LEFT_HT_MIN = 16
+
+    if bw < LEFT_WD_MIN:
+        bounds[2] = bounds[0] + LEFT_WD_MIN
 
     bh = bounds[3] - bounds[1]
-    if bh < 16:
-        bounds[3] = bounds[1] + 16
+    if bh < LEFT_HT_MIN:
+        bounds[3] = bounds[1] + LEFT_HT_MIN
+    # bounds[1] = 0
+    # bounds[3] = sz[1]
+
     im2 = im.crop(tuple(bounds))
     im2.save(png_image_name)
 
