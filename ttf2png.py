@@ -59,6 +59,19 @@ for filename in files:
         subprocess.call(["convert", "-font", TTF_PATH, "-pointsize", FONT_SIZE, "-background", "rgba(0,0,0,0)","+antialias", "label:@" + input_txt, output_png])
 
 
+def crop(png_image_name):
+    im = Image.open(png_image_name)
+    bounds = list(im.getbbox())
+    print(bounds)
+    bw = bounds[2] - bounds[0]
+    if bw < 8:
+        bounds[2] = bounds[0] + 8
+
+    bh = bounds[3] - bounds[1]
+    if bh < 16:
+        bounds[3] = bounds[1] + 16
+    im2 = im.crop(tuple(bounds))
+    im2.save(png_image_name)
 
 for filename in files:
     name, ext = os.path.splitext(filename)
@@ -69,7 +82,12 @@ for filename in files:
     else:
         save_png = IMAGES_DIR + "/rotated/" + name  + ".png"
     if name in testArray:
+        crop(output_png)
         f = Image.open(output_png)
+        # im2 = im.crop(im.getbbox())
+        # # im2.size  # (214, 178)
+        # im2.save(output_png)
+
         f_m = f.transpose(Image.FLIP_LEFT_RIGHT)
         f_r = f_m.rotate(90,expand=1)
         f_r2 = f_r.resize((16,8))
