@@ -1,15 +1,15 @@
 
 decompFontLUT = {
-	"zero" : "font_graphics.05900.ia4",
-	"one" : "font_graphics.05940.ia4",
-	"two" : "font_graphics.05980.ia4",
-	"three" : "font_graphics.059C0.ia4",
-	"four" : "font_graphics.05A00.ia4",
-	"five" : "font_graphics.05A40.ia4",
-	"six" : "font_graphics.05A80.ia4",
-	"seven" : "font_graphics.05AC0.ia4",
-	"eight" : "font_graphics.05B00.ia4",
-	"nine" : "font_graphics.05B40.ia4",
+	"0" : "font_graphics.05900.ia4",
+	"1" : "font_graphics.05940.ia4",
+	"2" : "font_graphics.05980.ia4",
+	"3" : "font_graphics.059C0.ia4",
+	"4" : "font_graphics.05A00.ia4",
+	"5" : "font_graphics.05A40.ia4",
+	"6" : "font_graphics.05A80.ia4",
+	"7" : "font_graphics.05AC0.ia4",
+	"8" : "font_graphics.05B00.ia4",
+	"9" : "font_graphics.05B40.ia4",
 	"A" : "font_graphics.05B80.ia4",
 	"B" : "font_graphics.05BC0.ia4",
 	"C" : "font_graphics.05C00.ia4",
@@ -63,15 +63,20 @@ decompFontLUT = {
 	"y" : "font_graphics.06800.ia4",
 	"z" : "font_graphics.06840.ia4",
 
-	"parenleft" : "font_graphics.06980.ia4",
-	"colon" : "font_graphics.06D00.ia4",
-	"comma" : "font_graphics.06B40.ia4",
-	"ampersand" : "font_graphics.06D80.ia4",
-	"exclam" : "font_graphics.068C0.ia4",
-	"hyphen" : "font_graphics.06D40.ia4",
-	"parenright" : "font_graphics.06A00.ia4",
-	"percent" : "font_graphics.06AC0.ia4",
-	"period" : "font_graphics.06A80.ia4"
+	"(" : "font_graphics.06980.ia4",
+	":" : "font_graphics.06D00.ia4",
+	"," : "font_graphics.06B40.ia4",
+	"'" : "font_graphics.06B80.ia4",
+	"&" : "font_graphics.06D80.ia4",
+	"!" : "font_graphics.068C0.ia4",
+	"-" : "font_graphics.06D40.ia4",
+	")" : "font_graphics.06A00.ia4",
+	"%" : "font_graphics.06AC0.ia4",
+	"." : "font_graphics.06A80.ia4",
+	"“" : "font_graphics.06C80.ia4", # open quote
+	"”" : "font_graphics.06CC0.ia4", # close quote
+	"~" : "font_graphics.06A40.ia4",
+	"?" : "font_graphics.06BC0.ia4",
 
 
 	# "g" : "font_graphics.06880.ia4"
