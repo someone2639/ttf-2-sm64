@@ -10,11 +10,15 @@ from PIL import Image, ImageDraw, ImageChops, ImageFont
 from LUT import decompFontLUT
 
 # switch to "Decomp" for S2DEX Text Engine conversion
-Mode = "Dialog"
-canvW = 8
-canvH = 16
-resizeW = 8
-resizeH = 16
+# Mode = "Dialog"
+# canvW = 8
+# canvH = 16
+# resizeW = 8
+# resizeH = 16
+
+Mode = "Decomp"
+canvW = 64
+canvH = 128
 
 
 image = Image.new("LA", (canvW, canvH))
@@ -33,18 +37,21 @@ def fixImage(img):
             if pA[i,j][0] > 127:
                 pA[i,j]=(252, 255)
 
-for x in charset:
+for i, x in enumerate(charset):
     draw.text((0, 0), x, font=font, color="white")
 
-    f_m = image.transpose(Image.FLIP_LEFT_RIGHT)
-    f_r = f_m.rotate(90,expand=1)
-    f_r2 = f_r.resize((resizeH,resizeW))
-    f_m2 = f_r2.transpose(Image.FLIP_LEFT_RIGHT)
-    f = f_m2.transpose(Image.FLIP_TOP_BOTTOM)
+    if Mode == "Dialog":
+        f_m = image.transpose(Image.FLIP_LEFT_RIGHT)
+        f_r = f_m.rotate(90,expand=1)
+        f_r2 = f_r.resize((resizeH,resizeW))
+        f_m2 = f_r2.transpose(Image.FLIP_LEFT_RIGHT)
+        f = f_m2.transpose(Image.FLIP_TOP_BOTTOM)
 
-    fixImage(f)
+        fixImage(f)
 
-    f.save("images/%s.png" % decompFontLUT[x])
+        f.save("images/%s.png" % decompFontLUT[x])
+    else:
+        image.save("images/%d.png" % i)
 
     image = Image.new("LA", (canvW, canvH))
     draw = ImageDraw.Draw(image)
